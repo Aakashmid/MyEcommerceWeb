@@ -1,0 +1,140 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Tracker {% endblock %}
+
+{% block body %}
+
+<div class='container'>
+    <div class="col my-4">
+        <h4>Enter Your Email and Order Id to track your order </h4>
+        <div>
+
+            <form id="trackerForm" method="post" action="#" class="row">
+                {% csrf_token %}
+                <input type="hidden" name="itemsJson" id="itemsJson">
+                <div class="col-md-6">
+                    <label for="input" class="form-label">Order Id</label>
+                    <input type="text" class="form-control" id="orderId" name="orderId" placeholder="Enter  Order Id">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="Email" name="Email" placeholder="Enter  Email">
+                </div>
+                <div class="col-12 my-4">
+                    <button type="submit" class="btn btn-primary">Track Order</button>
+                </div>
+            </form>
+
+
+        </div>
+        <div class="col my-4">
+            <h4>Your Order Status </h4>
+            <div>
+                <ul class="list-group" id="items">
+
+                </ul>
+            </div>
+
+        </div>
+        <h4>Your Order Details </h4>
+        <div class="my-4">
+            <ul class="list-group" id="citems">
+
+            </ul>
+        </div>
+
+
+
+    </div>
+</div>
+
+{% endblock %}
+{% block js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script> console.log('Hello');
+    $('#trackerForm').submit(function (event) {
+        $('#items').empty();
+
+
+        var formData = {
+            'orderId': $('input[name=orderId]').val(),
+            'email': $('input[name=Email]').val(),
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken').val()
+
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/shop/tracker/',
+            data: formData,
+            encode: true
+
+        })
+            //response from views tracker comeing here, data is  response
+            .done(function (data) {
+                $('#citems').empty();
+                console.log(data);
+
+                data = JSON.parse(data);
+                
+                if (data['status'] == 'success') {
+                    updates = data['updates'];
+                    for ( i=0;i<updates.length;i++) {
+                        let text = updates[i]['text'];
+
+                        let time = updates[i]['time'];
+
+                        myStr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+        ${text}
+        <span class="badge bg-primary rounded-pill">${time}</span>
+      </li>`;
+
+                        $('#items').append(myStr);
+                    }
+
+
+                    cart = JSON.parse(data['item_json'])
+                    console.log(cart);
+                    var TotalCost;
+                    for (item in cart) {
+                        let Qty = cart[item][0];
+
+                        let Name = cart[item][1];
+                        let Price = cart[item][2];
+
+                        TotalCost += Price;
+                        myStr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+        ${Name}
+        <span class="badge bg-primary rounded-pill">${Qty}</span>
+      </li>`;
+
+                        $('#citems').append(myStr);
+
+                    }
+
+                }
+                else {
+                    myStr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+        Sorry
+        <span class="badge bg-primary rounded-pill"></span>
+      </li>`;
+
+                    $('#items').append(myStr);
+                }
+
+
+            });
+
+
+
+        event.preventDefault();
+
+
+    });
+
+
+
+
+</script>
+{% endblock %}

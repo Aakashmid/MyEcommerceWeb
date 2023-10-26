@@ -1,0 +1,48 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Contact {% endblock %}
+
+{% block style %}
+.container{
+    width:600px;
+}
+{% endblock %}
+{% block body %}
+<div class="container-fluid my-4 px-2">
+    <!-- <center><img src="static/phone.jpg" alt="..." class="src " width="500px"> </center> -->
+</div>
+
+<div class="container my-3 py-4 ">
+    <h1 class="text-center">Contact Us</h1>
+    <form method="POST" action="/shop/contact/">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder=" Enter your name">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email address">
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone No.</label>
+            <input type="phone" class="form-control" id="phone" name="phone" placeholder="Enter your phone no.">
+        </div>
+
+        <div class="mb-3">
+            <label for="desc" class="form-label">For what you want to contact.....</label>
+            <textarea type='text' class="form-control" name='desc' id="desc" rows="3"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit" style="margin: 50px ;">Submit</button>
+    </form>
+</div>
+<script>
+
+{% if submit %}
+alert('Successfully Submitted');
+localStorage.clear();
+document.location = "/shop";
+{% endif %}
+</script>
+
+{% endblock %}

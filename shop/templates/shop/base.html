@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% comment %} <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% endcomment %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> {% block title %} {% endblock  %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <style>
+        {% block style %} 
+
+        {% endblock  %}
+    </style>
+
+</head>
+<body>
+    {% comment %} <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> {% endcomment %}
+      <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/shop">My Awesome Cart</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/shop">Home<span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/shop/about">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/shop/tracker">Tracker</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/shop/contact">Contact Us</a>
+              </li>
+              
+              
+              
+            </ul>
+            <form class="d-flex" role="search" method="get" action="/shop/search">
+              <input name="searchitem" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button  class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            {% comment %} <button id="popcart" data-html="true" type="button" class="btn btn-secondary mx-3"  data-bs-conten="Cart" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover">
+              Cart(<span id="cart">0</span>)
+            </button> {% endcomment %}
+            <button id="popcart" type="button"  data-html="true" class="btn btn-secondary mx-3" data-container="body" data-toggle="popover" data-placement="left" >
+Cart(<span id="cart"></span>)
+</button>
+          </div>
+        </div>
+      </nav>
+
+    {% block body  %}
+    
+    {% endblock  %}
+    <script
+    src="https://code.jquery.com/jquery-3.7.1.js"
+    integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+    {% block js %}{% endblock  %}
+</body>
+
+</html>
