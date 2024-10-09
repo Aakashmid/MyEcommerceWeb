@@ -1,0 +1,8 @@
+Ecommercevenv/
+migrations/
+
+
+media/
+__pycache__/
+
+db.sqlite3

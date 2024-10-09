@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-+4rgk3(98im#b=cne7s#k$2@f1ha*c_wpi1crnpxae13kmec8(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django-ecommerce-website-by-aakashmid.onrender.com'
+ALLOWED_HOSTS = ['django-ecommerce-website-by-aakashmid.onrender.com','127.0.0.1'
 
     # Add other allowed hosts if necessary
 ]
@@ -132,6 +132,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # managing media
-
+STATICFILES_DIRES=[
+    BASE_DIR /'static'
+]
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 MEDIA_URL="/media/"
