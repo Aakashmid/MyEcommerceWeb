@@ -62,7 +62,7 @@ bottom:auto;
 
   <h2>{{products.0.category}}</h2>
   <div class="row">
-    <div class="carousel slide my-3" id="demo{{forloop.counter}}" data-ride="carousel">
+    <div class="carousel slide my-3" id="demo{{forloop.counter}}" data-ride="carousel" data-interval='false'>
       <ul class="carousel-indicators">
         <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
         {% for i in range %}
@@ -79,12 +79,12 @@ bottom:auto;
           {% for i in products %}
           <div class="col-xs-3 col-sm-3 col-md-3">
             <div class="card" style="width:94%; margin-right:0px; margin-left:0px;">
-              <img src='/media/{{i.image}} ' class="card-img-top" alt="...">
+              <img src='/media/{{i.image}} '  style="object-fit: contain;width: 100%;"  class="card-img-top" alt="...">
               <div class="card-body">
-                <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h5>
-                <p class="card-text">{{i.desc}}</p>
+                <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name| truncatechars:20}}</h5>
+                <p class="card-text">{{i.desc | truncatechars:30}}</p>
                 <p>Price -
-                <p class="card-text" id="pricepr{{i.id}}">{{i.price}} Rs</p>
+                <span class="card-text" id="pricepr{{i.id}}">{{i.price}} Rs</span>
                 </p>
 
                 <span id="divpr{{i.id}}" class="divpr">
@@ -133,7 +133,7 @@ bottom:auto;
 
 <script>
   console.log(cart);
-  $.noConflict();      // tp avoid conflict between javascript and jquery $
+  $.noConflict();      // to avoid conflict between javascript and jquery $
 
   console.log('working');
   if (localStorage.getItem('cart') == null) {
@@ -144,6 +144,7 @@ bottom:auto;
     document.getElementById('cart').innerHTML = Object.keys(cart).length;
     updateCart(cart);
   }
+
   // $('.cart').click(function () {
   $('.divpr').on('click', 'button.cart', function () {
     var idstr = this.id.toString();
@@ -159,10 +160,8 @@ bottom:auto;
       cart[idstr] = [Qty, Name, Price];
     }
     updateCart(cart);
-    // console.log(cart);
-    // localStorage.setItem('cart', JSON.stringify(cart));
-    // document.getElementById('cart').innerHTML = Object.keys(cart).length;
   });
+
   function updatePopover(cart) {
     var popStr = "";
     popStr = popStr + "<h5> Cart for your items in my shopping cart </h5><div class='mx-2 my-2'>";
@@ -174,7 +173,6 @@ bottom:auto;
     }
     popStr = popStr + "</div> <a href='/shop/checkout'><button class='btn btn-primary' id='checkOut' >Check Out</button></a> <button class='btn btn-primary' id='clearcart' onclick='clearCart()'>Clear Cart</button>"
     document.getElementById('popcart').setAttribute('data-content', popStr);
-    $('#popcart').popover('show');
   }
 
   //Function to clear cart
@@ -187,6 +185,8 @@ bottom:auto;
     cart = {};
     updateCart(cart);
   }
+
+
   //Function for updating cart
   function updateCart(cart) {
     var sum = 0;
@@ -220,6 +220,8 @@ bottom:auto;
 
     updateCart(cart);
   });
+
+
   //Plus button 
   $('.divpr').on("click", "button.plus", function () {
     a = this.id.slice(6,);
@@ -228,8 +230,8 @@ bottom:auto;
     updateCart(cart);
   });
 
-  $('#popcart').popover('show');
-  updatePopover(cart);
+$("#popcart").popover('show');
+updatePopover(cart);
 
 
 </script>
